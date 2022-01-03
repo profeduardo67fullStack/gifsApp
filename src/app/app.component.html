@@ -1,1 +1,46 @@
-<h1>Hola Mundo</h1>
+<!-- 1.- Creación de un menú con flexbox, recuerde que app.component.html
+    , es el primer elemento que se muestra en la aplicación -->
+
+
+<div class="d-flex">
+    <!-- Comienza SideBar -->
+    <div class="bg-dark border-right p-3" id="sidebar">
+        <h3 class="text-light">
+            Gifs-App
+        </h3>
+        <hr class="text-white">
+        <!-- 3.- Creamos el contenido para el historial -->
+        <div class="list-group list-reset">
+            <a href="#" class="list-group-item list-group-item-action">
+                Dashboard
+            </a>
+        </div>
+    </div>
+    <!-- Finaliza SideBar -->
+
+    <!-- 4.- Formateamos el contenido -->
+    
+    <!-- Área de Busqueda -->
+    <div class="container">
+
+        <div class="row p-3">
+            <div class="col">
+                <h5>Buscar:</h5>
+                <input type="text" class="form-control" placeholder="Buscar Gifs...">
+            </div>
+        </div>
+        <hr />
+    <!-- Termina el área de busqueda -->
+
+    <!-- Area de Muestreo -->
+        <div class="row">
+            <div class="col">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus ex ut suscipit reiciendis odit magni
+                debitis facilis, maxime blanditiis nam asperiores tenetur veritatis error, quasi natus dolore atque?
+                Eligendi, numquam.
+            </div>
+        </div>
+        <!-- Termina Área de Muestreo -->
+    </div>
+
+</div>
