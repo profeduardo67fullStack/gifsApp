@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { GifsService } from '../services/gifs.service';
 
 @Component({
   selector: 'app-busqueda',
@@ -17,9 +18,18 @@ export class BusquedaComponent{
  //Not-null assertion operator (!)
  @ViewChild('txtBuscar') txtBuscar!:ElementRef<HTMLInputElement>;
 
+ 
+ /**Hacemos una inyección  */
+
+ constructor(private gifsService: GifsService){}//Con esto ya tenemos accesos a todas sus propiedades y métodos incluido agregarGifs
+
+
+
     buscar(){
       const valor = this.txtBuscar.nativeElement.value;
-    console.log(valor);
-    this.txtBuscar.nativeElement.value='';
+    
+      this.gifsService.buscarGifs(valor);
+    
+      this.txtBuscar.nativeElement.value='';
   }
 }
