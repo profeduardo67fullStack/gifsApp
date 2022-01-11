@@ -14,12 +14,18 @@ export class GifsService {
   private _historial: string[] = [];
 
   get historial(){
+    
     return [...this._historial];//Para romper el paso por referencia y que por cualquier cosa no modifique el original
   }
 
-  buscarGifs (query: string){
-    this._historial.unshift(query);//Inserto al inicio del Arreglo
-    console.log(this._historial);
+  buscarGifs (query: string= ''){
+
+    query = query.trim().toLocaleLowerCase();
+
+    if(!this._historial.includes(query)){
+      this._historial.unshift(query);//Inserto al inicio del Arreglo
+      this._historial = this._historial.splice(0,10);//Limitar a 10 las entradas de los items
+    }
   }
 
 }
