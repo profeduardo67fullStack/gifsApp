@@ -1,3 +1,24 @@
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus ex ut suscipit reiciendis odit magni
-debitis facilis, maxime blanditiis nam asperiores tenetur veritatis error, quasi natus dolore atque?
-Eligendi, numquam.
+<!-- Pintamos los resultados  -->
+<!-- 
+<ul>
+    <li *ngFor="let gif of resultados">
+        {{gif.title}}
+    </li>
+
+</ul> -->
+
+
+<div class="row">
+    <div *ngFor="let gif of resultados" 
+        class="col-md-4 col-sm-6">
+        <div class="card">
+            <!-- Si queremos que Angular, lo tome como el valor de una propiedad, lo ponemos en corchete, sino solo sería un string  -->
+            <img [src]="gif.images.downsized_medium.url" [alt]="gif.title">
+            <div class="card-body">
+                <p class="card-text">
+                    {{gif.title}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

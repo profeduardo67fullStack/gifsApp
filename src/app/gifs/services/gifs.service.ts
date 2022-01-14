@@ -18,6 +18,13 @@ export class GifsService {
 
   private _historial: string[] = [];
 
+  /**Creamos una propiedad donde almacenar los resultados */
+
+  public resultados: any[] = [];
+
+
+
+
   get historial(){
     
     return [...this._historial];//Para romper el paso por referencia y que por cualquier cosa no modifique el original
@@ -41,9 +48,10 @@ export class GifsService {
 
     /**Hacemo una petición HTTP */
 
-    this.http.get('https://api.giphy.com/v1/gifs/search?api_key=BySZi1vxxXobUX2FhTLqexPbKS4wjxnY&q=dragon ball z&limit=10')
+    this.http.get(`https://api.giphy.com/v1/gifs/search?api_key=BySZi1vxxXobUX2FhTLqexPbKS4wjxnY&q=${query}&limit=10`)
     .subscribe((resp: any) => {//Este se ejecuta cuando se tenga la resolución de este get
       console.log(resp.data);
+      this.resultados=resp.data;
     })
 
 
