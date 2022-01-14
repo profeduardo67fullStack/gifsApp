@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {Gif, SearchGifsResponse} from '../interface/gifs.intarface';
+
 
 @Injectable({
   /**Con esta caracteristica permite que los servicios puedan quedar definidos en el momento que se 
@@ -20,7 +22,7 @@ export class GifsService {
 
   /**Creamos una propiedad donde almacenar los resultados */
 
-  public resultados: any[] = [];
+  public resultados: Gif[] = [];
 
 
 
@@ -32,7 +34,19 @@ export class GifsService {
 
   /**Aca inyectamos el servicio de HttpClient */
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient){
+
+    /**Primera forma de regresar el contenido */
+ 
+    // if(localStorage.getItem('historial')){
+    //   this._historial = JSON.parse(localStorage.getItem('historial')!)//COn el signo de !, le decimos a Angular que confie en nosotros
+    // }
+
+    //O podemos hacerlo asi
+
+    this._historial=JSON.parse(localStorage.getItem('historial')!) || [];
+    this.resultados=JSON.parse(localStorage.getItem('resultados')!) || [];
+  }
 
 
   // async buscarGifs (query: string= ''){
@@ -43,15 +57,24 @@ export class GifsService {
     if(!this._historial.includes(query)){
       this._historial.unshift(query);//Inserto al inicio del Arreglo
       this._historial = this._historial.splice(0,10);//Limitar a 10 las entradas de los items
+
+      /**Aca puede ser un buen lugar para grabar en el localStorage */
+      /**Para utilizar el LocalStorage, no es necesario importar nada, ya que esto es propio del navegador */
+      localStorage.setItem('historial', JSON.stringify(this._historial));//Convertimos el objeto a texto por medio de JSON y su método .stringify
+      
+
+
     }
 
 
     /**Hacemo una petición HTTP */
 
-    this.http.get(`https://api.giphy.com/v1/gifs/search?api_key=BySZi1vxxXobUX2FhTLqexPbKS4wjxnY&q=${query}&limit=10`)
-    .subscribe((resp: any) => {//Este se ejecuta cuando se tenga la resolución de este get
+    this.http.get<SearchGifsResponse>(`https://api.giphy.com/v1/gifs/search?api_key=BySZi1vxxXobUX2FhTLqexPbKS4wjxnY&q=${query}&limit=10`)
+    .subscribe((resp) => {//Este se ejecuta cuando se tenga la resolución de este get
       console.log(resp.data);
       this.resultados=resp.data;
+      //Esto se hace aca, por que es cuando yo ya tengo la respuesta, no lo podemos hacer arriba junto al otro
+      localStorage.setItem('resultados', JSON.stringify(this.resultados));//Hacemos lo mismo para las imagenes que arroja el resultado
     })
 
 
