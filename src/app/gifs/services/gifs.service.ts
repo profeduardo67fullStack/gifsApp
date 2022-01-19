@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Gif, SearchGifsResponse} from '../interface/gifs.intarface';
 
@@ -17,6 +17,7 @@ export class GifsService {
   /**Hacemos una variable con la APIKey que generamos en developer.giphy */
 
   private apikey: string = 'BySZi1vxxXobUX2FhTLqexPbKS4wjxnY';
+  private servicioUrl: string = 'https://api.giphy.com/v1/gifs';
 
   private _historial: string[] = [];
 
@@ -67,9 +68,19 @@ export class GifsService {
     }
 
 
-    /**Hacemo una petición HTTP */
+    /**Creamos una variable o propiedad para parametrizar la URL */
+    const params= new HttpParams()
+      .set('api_key', this.apikey)
+      .set('limit','10')
+      .set('q',query);
 
-    this.http.get<SearchGifsResponse>(`https://api.giphy.com/v1/gifs/search?api_key=BySZi1vxxXobUX2FhTLqexPbKS4wjxnY&q=${query}&limit=10`)
+
+    /**Hacemo una petición HTTP */
+    /**Nota: en EMAC6 si vamos a mandar un objeto, que tenga como valor el mismo nombre del objeto, solo se puede andar el nombre
+     * sin valor ej: params: params lo podriamos poner solo params
+     */
+
+    this.http.get<SearchGifsResponse>(`${this.servicioUrl}/search`,{params})
     .subscribe((resp) => {//Este se ejecuta cuando se tenga la resolución de este get
       console.log(resp.data);
       this.resultados=resp.data;
